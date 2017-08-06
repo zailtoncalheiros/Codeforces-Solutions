@@ -43,3 +43,13 @@ Print a single integer — the minimum possible inconvenience of the roads after
 | 5 <br/> 2 3 7 <br/> 3 1 9 <br/> 4 1 8 <br/> 3 5 4 <br/> 4 5 5 |
 | **output** |
 | 18 |
+
+## Solution
+
+### Prerequisites
+
+It's important to know the following contents to completely understand the solution:
+
+* Basic graph theory: the solution covers contents such as graph traversal (DFS or BFS), trees, cycle detection.
+* Segment Tree: it's a data structure which allows, among other applications, to retrieve the greatest element in a continous interval and to update values in a sub-linear time, O(log n).
+
