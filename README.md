@@ -53,3 +53,18 @@ It's important to know the following contents to completely understand the solut
 * Basic graph theory: the solution covers contents such as graph traversal (DFS or BFS), trees, cycle detection.
 * Segment Tree: it's a data structure which allows, among other applications, to retrieve the greatest element in a continous interval and to update values in a sub-linear time, O(log n).
 
+### Proposed Solution
+
+The first part when you are solving a problem is to completely understand what it wants and then, to create/colect the maximum of useful abstractions related to that task.
+
+The problem wants to know what the best choice to remove an edge that leads into a minimum simple path from the maximum among all possible simple paths.
+
+The input graph contains n vertices and n edges, every graph which contains exactly n vertices and n-1 edges is a tree and it connects all its vertices and contains no cycles, then the input is a tree with one more edge. If we add an edge into a tree, we are creating a cycle with some subset of vertices from that tree.
+
+We can claim that the erased edge belongs to the cycle, otherwise the resulting graph is not any more connected. 
+
+The solution can be split into two cases. In the first case, the greatest path does not pass through any edge in the cycle. The second case is the opposite of first case. We can deal these two cases independentily because the erased edge does not affect the first case cost. So, the result is the maximum value between both cases.
+
+#### First Case 
+
+#### Second Case 
