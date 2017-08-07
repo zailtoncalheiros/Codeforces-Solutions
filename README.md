@@ -75,7 +75,7 @@ We can show that the initial vertex choice is not important and we are going to 
 
 Let v be the chosen vertex and sp, the simple path that represents the tree diameter. Now, suppose that h is the shortest path from v to some vertex w in sp. Then, we can split sp in two parts, divided by the vertex w, sp1 and sp2, where sp1 length is less than sp2 length. If we apply that algorithm then we will find a path with length l at least (sp2 + h). If l is greater than that, we can easily construct a greater diameter which has a length at least (l - h + sp1), what it is impossible. Otherwise, we can construct another diameter with the same length, what is not a problem. 
 
-![tree example](images/graph-first-case.png?raw=true "Title")
+![tree example](images/graph-first-case.png?raw=true "Tree Example")
 
 Once we have one of the diameter endpoints, we run this algorithm again and get the other endpoint.
 
