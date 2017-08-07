@@ -63,8 +63,22 @@ The input graph contains n vertices and n edges, every graph which contains exac
 
 We can claim that the erased edge belongs to the cycle, otherwise the resulting graph is not any more connected. 
 
-The solution can be split into two cases. In the first case, the greatest path does not pass through any edge in the cycle. The second case is the opposite of first case. We can deal these two cases independentily because the erased edge does not affect the first case cost. So, the result is the maximum value between both cases.
+The solution can be split in two cases. In the first case, the greatest path does not pass through any edge in the cycle. The second case is the opposite of first case. We can deal these two cases independentily because the erased edge does not affect the first case cost. So, the result is the maximum value between both cases.
 
 #### First Case 
+
+Find the longest simple path in a tree is a well known problem and this path is known as tree diameter.
+
+The first step to find the tree diameter is to idenitfy one of the final vertices of this diameter, and the algorithm is pretty simple: choose some vertex in the graph and run some traversal algorithm such as DFS to find the most distant vertex from it.
+
+We can show that the initial vertex choice is not important and we are going to discuss about that.
+
+Let v be the chosen vertex and sp, the simple path that represents the tree diameter. Now, suppose that h is the shortest path from v to some vertex w in sp. Then, we can split sp in two parts, divided by the vertex w, sp1 and sp2, where sp1 length is less than sp2 length. If we apply that algorithm then we will find a path with length l at least (sp2 + h). If l is greater than that, we can easily construct a greater diameter which has a length at least (l - h + sp1), what it is impossible. Otherwise, we can construct another diameter with the same length, what it is not a problem. 
+
+![tree example](images/graph-first-case.png?raw=true "Title")
+
+Once we have one of the diameter endpoints, we run this algorithm again and get the other endpoint.
+
+So, it's necessary to ignore all the edges that belongs to the cycle and apply the above algorithm to each formed tree.
 
 #### Second Case 
