@@ -200,7 +200,8 @@ long long solve_cycle () {
         st.update (i, i, vertex_depth[a] - path_len);
 
         //PUSH BACK
-        while ((sz(candidates) > 0) && (find_best(st, 0, i, n) > find_best(st, 0, candidates.back(), n))) {
+        while ((sz(candidates) > 0) && 
+            (find_best(st, 0, i, n) > find_best(st, 0, candidates.back(), n))) {
             candidates.pop_back();
         }
         candidates.push_back (i);
@@ -224,8 +225,8 @@ long long solve_cycle () {
         }
 
         //PUSH BACK
-        while ((sz(candidates) > 0) && 
-                (find_best(st, i, j, n) > find_best(st, i, candidates.back(), n))) {
+        while ((sz(candidates) == 1) && (find_best(st, i, j, n) > find_best(st, i, candidates.back(), n))
+        || ((sz(candidates) > 1) && (find_best(st, candidates[sz(candidates)-2], j, n) > find_best(st, candidates[sz(candidates)-2], candidates.back(), n)))) {
             candidates.pop_back();
         }
         candidates.push_back (j);
