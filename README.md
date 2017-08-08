@@ -82,3 +82,17 @@ Once we have one of the diameter endpoints, we run this algorithm again and get 
 So, it's necessary to ignore all the edges that belongs to the cycle and apply the above algorithm to each formed tree.
 
 #### Second Case 
+
+Once we know the vertices which belong to the cycle, let's represent them by (c1, c2, ..., cm), the initial step is to know for each vertex which is the maximum depth of its own tree, it's possible to find it through the previous DFS.
+
+Now, we use a segment tree (ST) where each position represents its own tree depth minus the vertex distance to c1. Because when substract ST[x] - ST[y] + 2 * depth(y), we get: (depth(x) - dist(x, c1)) - (depth(y)- dist(y, c1)) + 2 * depth(y) = depth(y) + depth (x) + dist (y, x), i.e., the maximum path which starts in some node of x and finishes in some node of y, it will be further referred as solution_cost (x, y). So, if we want to know the maximum path which finishes in y but starts in some point between x and y-1, it will be referred as maximum_path (x, y), our query should be something like ST(x, y-1) + ST(y,y) + 2 * depth(y) -- where ST(a, b) represents the maximum ST value for positions between a and b.
+
+A important observation is when for some pair of indices (x, y), every vertex a less than x and y, the solution_cost (a, x) - solution_cost (a, y) is always constant. Then, if we suppose maximum_path (a, x) is better than maximum_path (a, y), this situation will only change when a is greater enough that maximum_path (x, y) will become greater than maximum_path (a, x). And it is important because supposing that a is always increasing, once maximum_path (a, y) become greater than maximum_path (a, x), the opposite won't happen anymore.
+
+In this way, if we store a sequence of right endpoints (r[1], r[2], ... r[k]) where maximum_path (r[i-2], r[i-1]) > maximum_path (r[i-2], r[i]), for all i greater than 2 and less or equal than k, for i iquals to 1, maximum_path (a, r[i-1]) > maximum_path (a, r[i]), where a represents the leftmost vertex, i.e., the first vertex after the removed edge. And if we have a situation where maximum_path (r[i-2], r[i-1]) <= maximum_path (r[i-2], r[i]), we can just remove r[i-1], while the condititon discribed above is not fulfilled. In the end, we will have something like:
+
+![Invariant example](images/chart.png?raw=true "Invariant example")
+
+So, it's easy to see that if this condition above holds, the sequence solution only decreases, and if we shift the removed edge to the next one, the a increases one position and possibly we need to erase some front elements from our sequence r and possibly have to add a new endpoint in the edge of the sequence. Then, we just need to front elements to check the best answer to that setting, and if we do n shifts, we just to need no more than n add, erase and check operations, where which one those operations cost at maximum O (log n). Therefore, we can hava a overall O (n * log n) time complixity.
+
+Initially, we ignore the last edge (cm, c1), so we just consider the left endpoints from 1 to m. Then, we add all right endpoints from 1 to m into our sequence and we calculate the result as discribed above. After that, we make a right shift, i.e, ignore the first left endpoint (c1) and add a new one (cm+1) right endpoint into the sequence and possibly erasing others. And we keep doing that until we erase all the possible edges.
