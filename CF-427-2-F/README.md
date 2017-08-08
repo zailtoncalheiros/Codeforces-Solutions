@@ -1,6 +1,6 @@
 # CF #427 (Div. 2) - Problem F
 
-## Problem Description 
+## Problem Description [(Link)](http://codeforces.com/contest/835/problem/F)
 
 time limit per test: 2 seconds
 
