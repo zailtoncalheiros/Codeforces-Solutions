@@ -33,9 +33,8 @@ int get_cost (int i, int j) {
 
 ll prefix[2*MAXN], suffix[2*MAXN];
 
+// Get the path length from branch x to the branch y.
 ll get_resp (int x, int y, int n) {
-    //cout << x << " " << y << " " << (prefix[y] - prefix[x] + 2 * vertex_depth[vertices_in_cycle[x % n]]) << endl;
-    //cout << prefix[x] << " " << prefix[y] << endl;
     return prefix[y] - prefix[x] + 2 * vertex_depth[vertices_in_cycle[x % n]];
 }
 
@@ -43,8 +42,6 @@ ll get_resp (int x, int y, int n) {
 ll solve_cycle() {
     int n = sz(vertices_in_cycle);
     ll path_len = 0;
-    //FORR (i, n) cerr << vertices_in_cycle[i] << " "; cerr << endl;
-    //FORR (i, n) cerr << vertex_depth[vertices_in_cycle[i]] << " "; cerr << endl;
 
     FORR (i, 2*n) {
         int a = vertices_in_cycle[(i)%n], b = vertices_in_cycle[(i+1)%n];
@@ -52,8 +49,6 @@ ll solve_cycle() {
         prefix[i] = vertex_depth[a] + path_len;
         suffix[i] = vertex_depth[a] - path_len;
 
-        //cerr << i << " := " << prefix[i] << " " << path_len << endl;
-        //cerr << "-> " << a << " " << b << endl;
         path_len += get_cost (a, b);
     }
 
@@ -79,14 +74,10 @@ ll solve_cycle() {
     }
 
     ll resp = get_resp(d_1.front(), d_2.front(), n);
-    //cout << "=> " << resp << endl;
 
     FOR (i, n, 2*n) {
         int k = i-n;
-        //cerr << "\\/" << endl;
-        //FORR (w, sz(d_1)) cerr << d_1[w] << " "; cerr << endl;
         if (k >= d_1.front()) {
-            //cerr << "here" << endl;
             d_1.pop_front();
         } 
 
@@ -101,7 +92,6 @@ ll solve_cycle() {
             d_2.pop_back();
         }
         d_2.push_back(i);
-        //cerr << "-> " << d_1.front() << " " << d_2.front() << " " << d_2[1] << " " << get_resp (d_1.front(), d_2.front(), n) << " " << get_resp (d_2.front(), d_2[1], n) << endl;
         if (sz(d_2) > 1 && get_resp (d_1.front(), d_2.front(), n) < get_resp (d_2.front(), d_2[1], n)) {
             d_2.pop_front();
         }
@@ -112,7 +102,6 @@ ll solve_cycle() {
             d_1.push_back (j);
         }
         resp = min (resp, get_resp(d_1.front(), d_2.front(), n));
-        //cout << "=> " << resp << " " << d_1.front() << " " << d_2.front() << " " << d_2.back() << endl;
     }
 
     return resp;
