@@ -96,3 +96,19 @@ In this way, if we store a sequence of right endpoints (r[1], r[2], ... r[k]) wh
 So, it's easy to see that if this condition above holds, the sequence solution only decreases, and if we shift the removed edge to the next one, the a increases one position and possibly we need to erase some front elements from our sequence r and possibly have to add a new endpoint in the edge of the sequence. Then, we just need to front elements to check the best answer to that setting, and if we do n shifts, we just to need no more than n add, erase and check operations, where which one those operations cost at maximum O (log n). Therefore, we can hava a overall O (n * log n) time complixity.
 
 Initially, we ignore the last edge (cm, c1), so we just consider the left endpoints from 1 to m. Then, we add all right endpoints from 1 to m into our sequence and we calculate the result as discribed above. After that, we make a right shift, i.e, ignore the first left endpoint (c1) and add a new one (cm+1) right endpoint into the sequence and possibly erasing others. And we keep doing that until we erase all the possible edges.
+
+### Time complexity: O (n * log n)
+### Memory complexity: O (n)
+
+## Improved Solution
+
+There is a more efficient solution that runs in linear time. This solution does not make use of our segment tree. It just uses two deques instead of a segment tree and a deque.
+
+In simple terms, we maintain a deque for the candidates to the possible best left branches of the path (prefixes) and another deque for the candidates to the best right branches (suffixes) of the path. 
+
+The prefix cost from a vertex x is calculated based on the path length since the leftmost vertex plus the vertex depth of x. Similarly, the suffix cost from a vertex x is based on the path length starting at the rightmost vertex plus the vertex depth of x. 
+
+It's possible to dynamically update those sequences in linear time while we are doing our right shift in our cycle.
+
+### Time complexity: O(n)
+### Memory complexity: O(n)
